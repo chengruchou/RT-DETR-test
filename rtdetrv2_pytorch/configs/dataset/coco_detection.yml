@@ -18,8 +18,8 @@ train_dataloader:
   type: DataLoader
   dataset: 
     type: CocoDetection
-    img_folder: C:\Users\cvteam\Documents\Drone_humen_detect\WiSARD_VIS-4\train\
-    ann_file: C:\Users\cvteam\Documents\Drone_humen_detect\WiSARD_VIS-4\annotations\train_annotations.coco.json
+    img_folder: D:\Drone_humen_detect\
+    ann_file: D:\Drone_humen_detect\dataset_annotations\train.json
     return_masks: False
     transforms:
       type: Compose
@@ -35,8 +35,8 @@ val_dataloader:
   type: DataLoader
   dataset: 
     type: CocoDetection
-    img_folder: C:\Users\cvteam\Documents\Drone_humen_detect\WiSARD_VIS-4\valid\
-    ann_file: C:\Users\cvteam\Documents\Drone_humen_detect\WiSARD_VIS-4\annotations\valid_annotations.coco.json
+    img_folder: D:\Drone_humen_detect\
+    ann_file: D:\Drone_humen_detect\dataset_annotations\valid.json
     return_masks: False
     transforms:
       type: Compose
