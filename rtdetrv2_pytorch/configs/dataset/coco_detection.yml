@@ -18,8 +18,8 @@ train_dataloader:
   type: DataLoader
   dataset: 
     type: CocoDetection
-    img_folder: D:\Drone_humen_detect\
-    ann_file: D:\Drone_humen_detect\dataset_annotations\train.json
+    img_folder: D:\Code\RT-DETR-test\raw_dataset\WiSARD_VIS-4\train\
+    ann_file: D:\Code\RT-DETR-test\dataset_annotations\train.json
     return_masks: False
     transforms:
       type: Compose
@@ -35,8 +35,8 @@ val_dataloader:
   type: DataLoader
   dataset: 
     type: CocoDetection
-    img_folder: D:\Drone_humen_detect\
-    ann_file: D:\Drone_humen_detect\dataset_annotations\valid.json
+    img_folder: D:\Code\RT-DETR-test\raw_dataset\HERIDAL\test\
+    ann_file: D:\Code\RT-DETR-test\dataset_annotations\valid.json
     return_masks: False
     transforms:
       type: Compose

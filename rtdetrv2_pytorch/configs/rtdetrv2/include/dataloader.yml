@@ -14,7 +14,7 @@ train_dataloader:
         - {type: ConvertBoxes, fmt: 'cxcywh', normalize: True}
       policy:
         name: stop_epoch
-        epoch: 35 # epoch in [71, ~) stop `ops`
+        epoch: 30 # epoch in [71, ~) stop `ops`
         ops: ['RandomPhotometricDistort', 'RandomZoomOut', 'RandomIoUCrop']
   
   collate_fn:
@@ -23,7 +23,7 @@ train_dataloader:
     stop_epoch: 71 # epoch in [71, ~) stop `multiscales`
 
   shuffle: True
-  total_batch_size: 6 # total batch size equals to 16 (4 * 4)
+  total_batch_size: 8 # total batch size equals to 16 (4 * 4)
   num_workers: 4
 
 

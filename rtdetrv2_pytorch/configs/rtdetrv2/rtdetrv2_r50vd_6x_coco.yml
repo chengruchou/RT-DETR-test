@@ -7,7 +7,7 @@ __include__: [
 ]
 
 
-output_dir: ./output/WiSARD_MOBDRONE
+output_dir: ./output/r1
 
 
 
