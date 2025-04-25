@@ -8,7 +8,7 @@ import os
 import sys 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 import argparse
-import src.misc.dist as dist 
+import src.misc.dist_utils as dist 
 from src.core import YAMLConfig 
 from src.solver import TASKS
 import numpy as np
@@ -177,16 +177,16 @@ def main(args, ):
         output = model(im_data, orig_size)
         labels, boxes, scores = output
         
-    draw([im_pil], labels, boxes, scores, 0.6)
+    draw([im_pil], labels, boxes, scores, 0.8)
   
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, )
+    parser.add_argument('-c', '--config', type=str, default='C:\drone project\RT-DETR-test\rtdetrv2_pytorch\configs\rtdetrv2\rtdetrv2_r50vd_6x_coco.yml')
     parser.add_argument('-r', '--resume', type=str, )
     parser.add_argument('-f', '--im-file', type=str, )
     parser.add_argument('-s', '--sliced', type=bool, default=False)
-    parser.add_argument('-d', '--device', type=str, default='cpu')
+    parser.add_argument('-d', '--device', type=str, default='cuda:0', help='device',)
     parser.add_argument('-nc', '--numberofboxes', type=int, default=25)
     args = parser.parse_args()
     main(args)
