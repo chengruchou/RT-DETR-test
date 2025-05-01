@@ -3,27 +3,50 @@ train_dataloader:
   dataset: 
     transforms:
       ops:
-        - {type: RandomPhotometricDistort, p: 0.5}
-        - {type: RandomZoomOut, fill: 0}
-        - {type: RandomIoUCrop, p: 0.8}
-        - {type: SanitizeBoundingBoxes, min_size: 1}
-        - {type: RandomHorizontalFlip}
-        - {type: Resize, size: [640, 640], }
-        - {type: SanitizeBoundingBoxes, min_size: 1}
-        - {type: ConvertPILImage, dtype: 'float32', scale: True}   
-        - {type: ConvertBoxes, fmt: 'cxcywh', normalize: True}
+      # - {type: Mosaic, size: [640, 640]}
+      # - {type: MixUp, alpha: 0.2, beta: 0.2}
+      - {type: RandomPhotometricDistort, p: 0.5}
+      - {type: ColorJitter, brightness: 0.2, contrast: 0.2, saturation: 0.2, p: 0.5}
+      # - {type: RandomPerspective, degrees: 10, scale: [0.9, 1.1], p: 0.3}
+      - {type: RandomZoomOut, fill: 0}
+      - {type: RandomIoUCrop, p: 0.8}
+      - {type: SanitizeBoundingBoxes, min_size: 1}
+      - {type: RandomHorizontalFlip, p: 0.5}
+      - {type: Resize, size: [640, 640]}
+      - {type: SanitizeBoundingBoxes, min_size: 1}
+      - {type: ConvertPILImage, dtype: 'float32', scale: True}
+      - {type: ConvertBoxes, fmt: 'cxcywh', normalize: True}
+
       policy:
         name: stop_epoch
-        epoch: 32 # epoch in [71, ~) stop `ops`
-        ops: ['RandomPhotometricDistort', 'RandomZoomOut', 'RandomIoUCrop']
+        epoch: 32
+        ops: ['Mosaic', 'MixUp', 'RandomPhotometricDistort', 'RandomPerspective', 'RandomZoomOut', 'RandomIoUCrop']
+
+        # - {type: RandomAdjustSharpness,sharpness_factor: 0.6, p: 0.5}
+        
+      #   - {type: RandomPhotometricDistort, p: 0.5}
+      #   - {type: RandomZoomOut, fill: 0}
+      #   - {type: RandomIoUCrop, p: 0.8}
+      #   - {type: SanitizeBoundingBoxes, min_size: 1}
+      #   - {type: RandomHorizontalFlip}
+      #   - {type: Resize, size: [640, 640], }
+      #   # - {type: Mosaic, size: [640, 640]}
+      #   - {type: SanitizeBoundingBoxes, min_size: 1}
+      #   - {type: ConvertPILImage, dtype: 'float32', scale: True}   
+      #   - {type: ConvertBoxes, fmt: 'cxcywh', normalize: True}
+      # policy:
+      #   name: stop_epoch
+      #   epoch: 32 # epoch in [71, ~) stop `ops`
+      #   # ops: ['RandomAdjusrSharpness','RandomPhotometricDistort', 'RandomZoomOut', 'RandomIoUCrop']
+      #   ops: [ 'RandomPhotometricDistort', 'RandomZoomOut', 'RandomIoUCrop']
   
   collate_fn:
     type: BatchImageCollateFuncion
     scales: [480, 512, 544, 576, 608, 640, 640, 640, 672, 704, 736, 768, 800]
-    stop_epoch: 71 # epoch in [71, ~) stop `multiscales`
+    stop_epoch: 36 # epoch in [71, ~) stop `multiscales`
 
   shuffle: True
-  total_batch_size: 20 # total batch size equals to 16 (4 * 4)
+  total_batch_size: 16 # total batch size equals to 16 (4 * 4)
   num_workers: 10
 
 
@@ -32,7 +55,9 @@ val_dataloader:
     transforms:
       ops: 
         - {type: Resize, size: [640, 640]}
-        - {type: ConvertPILImage, dtype: 'float32', scale: True}   
+        - {type: ConvertPILImage, dtype: 'float32', scale: True}  
+        # - {type: RandomAdjustSharpness,sharpness_factor: 0.8, p: 1} 
+        
   shuffle: False
-  total_batch_size: 20
+  total_batch_size: 16
   num_workers: 10
